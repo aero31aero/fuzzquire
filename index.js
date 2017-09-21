@@ -1,34 +1,49 @@
 var projectroot = require('project-root-path');
 var walkSync = require('walk-sync');
 
+var isMatch = function(path, trypath){
+    var counter = 0;
+    var pathparts = path.split('/');
+    var tryparts = trypath.split('/');
+    for(j=0;j<tryparts.length; j++){
+        var elem1 = tryparts[j];
+        var index = pathparts.indexOf(elem1);
+        if (! (index >= counter)) return false;
+    }
+    return true;
+}
+
 var fuzzquire = function(path){
     var module = null;
-    var error = new Error('Module not found');
     var paths = walkSync(projectroot, { 
         globs: ['**/*.js'],
         ignore: ['.git', 'node_modules'],
     });
+    var modulepath = false;
     var elem = null;
     if(!path.endsWith('.js')) path +='.js';
     for(i=0;i<paths.length;i++){
         elem = paths[i];
-        // console.log("Itering:", elem);
-        if(elem.endsWith(path)){
-            // console.log("Trying to import");
-            try {
-                module = require(projectroot + "/" + elem);
-                // console.log(projectroot + "/" + elem)
-                return module;
+        if(elem.endsWith('/index.js')) {
+            elem = elem.replace('/index.js', '.js');
+        }
+        if(isMatch(elem, path)){
+            console.log(modulepath);
+            if(!modulepath){
+                modulepath = elem;
             }
-            catch(e) {
-                // console.log("Failed")
-                // error = e;
-                // Ignore module import errors
+            else {
+                throw new Error('Fuzzquire: Ambiguous Module Path' + path);
             }
         }
     }
-    throw error;
-
+    try {
+        module = require(projectroot + "/" + modulepath);
+        return module;
+    }
+    catch(e) {
+        throw new Error('Fuzzquire: Module Not Found' + path);
+    }
 }
 
 module.exports = fuzzquire;
