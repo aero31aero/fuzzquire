@@ -13,7 +13,7 @@ var isMatch = function(path, trypath){
     return true;
 }
 
-var fuzzquire = function(path){
+var fuzzquire = function(path, logging = false){
     var module = null;
     var paths = walkSync(projectroot, { 
         globs: ['**/*.js'],
@@ -25,11 +25,12 @@ var fuzzquire = function(path){
     for(i=0;i<paths.length;i++){
         elem = paths[i];
         var checkpath = elem
+        if(logging) console.log("Fuzzquire: Traversing:",elem);
         if(elem.endsWith('/index.js')) {
             checkpath = elem.replace('/index.js', '.js');
         }
         if(isMatch(checkpath, path)){
-            console.log("Fuzzquire: Found:",elem)
+            if(logging) console.log("Fuzzquire: Found:",elem)
             if(!modulepath){
                 modulepath = elem;
             }
@@ -39,6 +40,7 @@ var fuzzquire = function(path){
         }
     }
     try {
+        if(logging) console.log("Fuzzquire: Loading:",projectroot + "/" + modulepath);
         module = require(projectroot + "/" + modulepath);
         return module;
     }
