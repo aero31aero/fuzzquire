@@ -1,0 +1,27 @@
+{
+  "name": "fuzzquire",
+  "version": "0.0.2",
+  "description": "Fuzzy require modules from your project.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aero31aero/fuzzquire.git"
+  },
+  "keywords": [
+    "fuzzy",
+    "require"
+  ],
+  "author": "Rohitt Vashishtha <aero31aero@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/aero31aero/fuzzquire/issues"
+  },
+  "homepage": "https://github.com/aero31aero/fuzzquire#readme",
+  "dependencies": {
+    "project-root-path": "^1.0.0",
+    "walk-sync": "^0.3.2"
+  }
+}
