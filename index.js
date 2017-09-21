@@ -24,16 +24,17 @@ var fuzzquire = function(path){
     if(!path.endsWith('.js')) path +='.js';
     for(i=0;i<paths.length;i++){
         elem = paths[i];
+        var checkpath = elem
         if(elem.endsWith('/index.js')) {
-            elem = elem.replace('/index.js', '.js');
+            checkpath = elem.replace('/index.js', '.js');
         }
-        if(isMatch(elem, path)){
-            console.log(modulepath);
+        if(isMatch(checkpath, path)){
+            console.log("Fuzzquire: Found:",elem)
             if(!modulepath){
                 modulepath = elem;
             }
             else {
-                throw new Error('Fuzzquire: Ambiguous Module Path' + path);
+                throw new Error('Fuzzquire: Ambiguous Module Path: ' + path);
             }
         }
     }
@@ -42,7 +43,7 @@ var fuzzquire = function(path){
         return module;
     }
     catch(e) {
-        throw new Error('Fuzzquire: Module Not Found' + path);
+        throw new Error('Fuzzquire: Module Not Found: ' + path);
     }
 }
 
