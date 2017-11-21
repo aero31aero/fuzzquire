@@ -1,6 +1,6 @@
 {
   "name": "fuzzquire",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Fuzzy require modules from your project.",
   "main": "index.js",
   "scripts": {
