@@ -45,7 +45,7 @@ var fuzzquire = function(path, logging = false){
         return module;
     }
     catch(e) {
-        throw new Error('Fuzzquire: Module Not Found: ' + path);
+        throw e;
     }
 }
 
