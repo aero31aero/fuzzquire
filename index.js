@@ -13,12 +13,25 @@ var isMatch = function(path, trypath){
     return true;
 }
 
+var paths = [];
+
+var loader = function(projectroot, logging = false) {
+    if (!process.env.FUZZQUIRE_DATA) {
+        if(logging) console.log("Fuzzquire: Reading paths into memory.");
+        paths = walkSync(projectroot, {
+            globs: ['**/*.js'],
+            ignore: ['.git', 'node_modules'],
+        });
+        process.env.FUZZQUIRE_DATA = JSON.stringify(paths);
+    } else {
+        if(logging) console.log("Fuzzquire: Paths already in memory.");
+        paths = JSON.parse(process.env.FUZZQUIRE_DATA);
+    }
+}
+
 var fuzzquire = function(path, logging = false){
     var module = null;
-    var paths = walkSync(projectroot, { 
-        globs: ['**/*.js'],
-        ignore: ['.git', 'node_modules'],
-    });
+    loader(projectroot, logging);
     var modulepath = false;
     var elem = null;
     if(!path.endsWith('.js')) path +='.js';
