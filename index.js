@@ -19,7 +19,7 @@ var loader = function(projectroot, logging = false) {
     if (!process.env.FUZZQUIRE_DATA) {
         if(logging) console.log("Fuzzquire: Reading paths into memory.");
         paths = walkSync(projectroot, {
-            globs: ['**/*.js'],
+            globs: ['**/*.js', '**/*.json'],
             ignore: ['.git', 'node_modules'],
         });
         process.env.FUZZQUIRE_DATA = JSON.stringify(paths);
