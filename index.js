@@ -14,7 +14,7 @@ var isMatch = function(path, trypath){
     return true;
 }
 
-var logging = true; // default
+var logging = false; // default
 
 var getPathIfMatches = function (checkpath, path, modulepath, elem) {
     if(logging) console.log("Fuzzquire: Searching for:", path);
@@ -48,7 +48,7 @@ var loader = function(projectroot, enable_logging = false) {
     }
 }
 
-var fuzzquire = function(path){
+var fuzzquire = function(path, logging = false){
     var module = null;
     loader(projectroot, logging);
     var modulepath = false;
