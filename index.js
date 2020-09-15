@@ -1,6 +1,8 @@
-var projectroot = require('project-root-path');
 var walkSync = require('walk-sync');
 var Path = require('path');
+
+const pkgDir = require('pkg-dir');
+var projectroot = pkgDir.sync(Path.join(__dirname, '../'))
 
 var isMatch = function(path, trypath){
     var counter = 0;

@@ -44,7 +44,7 @@ jspm_packages
 .DS_Store
 
 #package-lock is something new
-package-lock.json
+# package-lock.json
 
 #upload directory
 public/static/data/*
